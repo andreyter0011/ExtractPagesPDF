@@ -9,7 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="itext7" Version="8.0.2" />
     <PackageReference Include="PDFsharp" Version="1.50.5147" />
+    <PackageReference Include="PDFSharp.Charting.netstandard" Version="1.3.1" />
+    <PackageReference Include="PDFSharp.Standard.Charting" Version="1.51.15" />
   </ItemGroup>
 
 </Project>

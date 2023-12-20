@@ -36,6 +36,7 @@
             label1 = new Label();
             txtSearchPhrase = new TextBox();
             labelSearchPhrase = new Label();
+            btnSearchAndRename = new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPagesPerFile).BeginInit();
             SuspendLayout();
             // 
@@ -57,12 +58,12 @@
             // 
             numericUpDownPagesPerFile.Location = new Point(25, 105);
             numericUpDownPagesPerFile.Name = "numericUpDownPagesPerFile";
-            numericUpDownPagesPerFile.Size = new Size(164, 23);
+            numericUpDownPagesPerFile.Size = new Size(177, 23);
             numericUpDownPagesPerFile.TabIndex = 1;
             // 
             // btnExtractPages
             // 
-            btnExtractPages.Location = new Point(295, 144);
+            btnExtractPages.Location = new Point(25, 147);
             btnExtractPages.Name = "btnExtractPages";
             btnExtractPages.Size = new Size(177, 49);
             btnExtractPages.TabIndex = 2;
@@ -89,26 +90,37 @@
             // 
             // txtSearchPhrase
             // 
-            txtSearchPhrase.Location = new Point(25, 242);
+            txtSearchPhrase.Location = new Point(528, 105);
             txtSearchPhrase.Name = "txtSearchPhrase";
-            txtSearchPhrase.Size = new Size(100, 23);
+            txtSearchPhrase.Size = new Size(260, 23);
             txtSearchPhrase.TabIndex = 5;
             // 
             // labelSearchPhrase
             // 
             labelSearchPhrase.AutoSize = true;
-            labelSearchPhrase.Location = new Point(25, 279);
+            labelSearchPhrase.Location = new Point(528, 87);
             labelSearchPhrase.Name = "labelSearchPhrase";
-            labelSearchPhrase.Size = new Size(38, 15);
+            labelSearchPhrase.Size = new Size(40, 15);
             labelSearchPhrase.TabIndex = 6;
-            labelSearchPhrase.Text = "label2";
+            labelSearchPhrase.Text = "Фраза";
+            // 
+            // btnSearchAndRename
+            // 
+            btnSearchAndRename.Location = new Point(573, 147);
+            btnSearchAndRename.Name = "btnSearchAndRename";
+            btnSearchAndRename.Size = new Size(177, 49);
+            btnSearchAndRename.TabIndex = 7;
+            btnSearchAndRename.Text = "Переименовать";
+            btnSearchAndRename.UseVisualStyleBackColor = true;
+            btnSearchAndRename.Click += btnSearchAndRename_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(800, 394);
+            ClientSize = new Size(800, 287);
+            Controls.Add(btnSearchAndRename);
             Controls.Add(labelSearchPhrase);
             Controls.Add(txtSearchPhrase);
             Controls.Add(label1);
@@ -135,5 +147,6 @@
         private Label label1;
         private TextBox txtSearchPhrase;
         private Label labelSearchPhrase;
+        private Button btnSearchAndRename;
     }
 }
