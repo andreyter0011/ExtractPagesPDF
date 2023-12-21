@@ -13,27 +13,6 @@ namespace PDF
         public Form1()
         {
             InitializeComponent();
-            HideControls();
-        }
-        private void HideControls()
-        {
-            btnExtractPages.Visible = false;
-            txtPdfPath.Visible = false;
-            numericUpDownPagesPerFile.Visible = false;
-            label1.Visible = false;
-            txtSearchPhrase.Visible = false;
-            labelSearchPhrase.Visible = false;
-            btnSearchAndRename.Visible = false;
-        }
-        private void ShowControls()
-        {
-            btnExtractPages.Visible = true;
-            txtPdfPath.Visible = true;
-            numericUpDownPagesPerFile.Visible = true;
-            label1.Visible = true;
-            txtSearchPhrase.Visible = true;
-            labelSearchPhrase.Visible = true;
-            btnSearchAndRename.Visible = true;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -49,7 +28,6 @@ namespace PDF
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     txtPdfPath.Text = openFileDialog.FileName;
-                    ShowControls();
                 }
             }
         }
@@ -89,7 +67,10 @@ namespace PDF
                         }
                     }
                 }
-
+                if (chkDeleteOriginal.Checked)
+                {
+                    File.Delete(pdfPath);
+                }
                 MessageBox.Show("—траницы извлечены и успешно сохранены!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)

@@ -37,6 +37,7 @@
             txtSearchPhrase = new TextBox();
             labelSearchPhrase = new Label();
             btnSearchAndRename = new Button();
+            chkDeleteOriginal = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPagesPerFile).BeginInit();
             SuspendLayout();
             // 
@@ -114,12 +115,23 @@
             btnSearchAndRename.UseVisualStyleBackColor = true;
             btnSearchAndRename.Click += btnSearchAndRename_Click;
             // 
+            // chkDeleteOriginal
+            // 
+            chkDeleteOriginal.AutoSize = true;
+            chkDeleteOriginal.Location = new Point(208, 163);
+            chkDeleteOriginal.Name = "chkDeleteOriginal";
+            chkDeleteOriginal.Size = new Size(187, 19);
+            chkDeleteOriginal.TabIndex = 8;
+            chkDeleteOriginal.Text = "Удалить оригинальный файл";
+            chkDeleteOriginal.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(800, 287);
+            Controls.Add(chkDeleteOriginal);
             Controls.Add(btnSearchAndRename);
             Controls.Add(labelSearchPhrase);
             Controls.Add(txtSearchPhrase);
@@ -148,5 +160,6 @@
         private TextBox txtSearchPhrase;
         private Label labelSearchPhrase;
         private Button btnSearchAndRename;
+        private CheckBox chkDeleteOriginal;
     }
 }
