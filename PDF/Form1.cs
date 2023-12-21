@@ -3,6 +3,8 @@ using PdfSharp.Pdf.IO;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using System.Text.RegularExpressions;
+using Tesseract;
+using System.Drawing;
 
 namespace PDF
 {
@@ -116,37 +118,45 @@ namespace PDF
 
             try
             {
-                using (iText.Kernel.Pdf.PdfReader pdfReader = new iText.Kernel.Pdf.PdfReader(pdfPath))
+                using (var engine = new TesseractEngine(@"D:\Pet-Project\ExtractPagesPDF\PDF\tessdata\", "rus", EngineMode.Default))
                 {
-                    using (iText.Kernel.Pdf.PdfDocument pdfDocument = new iText.Kernel.Pdf.PdfDocument(pdfReader))
+                    using (iText.Kernel.Pdf.PdfReader pdfReader = new iText.Kernel.Pdf.PdfReader(pdfPath))
                     {
-                        for (int pageNum = 1; pageNum <= pdfDocument.GetNumberOfPages(); pageNum++)
+                        using (iText.Kernel.Pdf.PdfDocument pdfDocument = new iText.Kernel.Pdf.PdfDocument(pdfReader))
                         {
-                            var strategy = new SimpleTextExtractionStrategy();
-                            string currentPageText = PdfTextExtractor.GetTextFromPage(pdfDocument.GetPage(pageNum), strategy);
-
-                            int startIndex = currentPageText.IndexOf(searchPhrase);
-
-                            if (startIndex != -1)
+                            for (int pageNum = 1; pageNum <= pdfDocument.GetNumberOfPages(); pageNum++)
                             {
-                                int endIndex = startIndex + searchPhrase.Length + 10;
-                                string newName = currentPageText.Substring(startIndex, endIndex - startIndex).Trim();
-                                string invalidChars = Regex.Escape(new string(Path.GetInvalidFileNameChars()));
-                                string validName = Regex.Replace(newName, "[" + invalidChars + "]", "");
-                                string newFilePath = Path.Combine(Path.GetDirectoryName(pdfPath), $"{validName}.pdf");
+                                var currentPage = pdfDocument.GetPage(pageNum);
 
-                                pdfDocument.Close();
-                                pdfReader.Close();
+                                // Извлекаем текст с изображениями в PDF
+                                var strategy = new LocationTextExtractionStrategy();
+                                string currentPageText = PdfTextExtractor.GetTextFromPage(currentPage, strategy);
 
-                                File.Move(pdfPath, newFilePath);
+                                int startIndex = currentPageText.IndexOf(searchPhrase);
 
-                                MessageBox.Show($"Файл успешно переименован в {validName}.pdf", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                if (startIndex != -1)
+                                {
+                                    int endIndex = startIndex + searchPhrase.Length + 10;
+                                    string newName = currentPageText.Substring(startIndex, endIndex - startIndex).Trim();
 
-                                return;
+                                    string invalidChars = Regex.Escape(new string(Path.GetInvalidFileNameChars()));
+                                    string validName = Regex.Replace(newName, "[" + invalidChars + "]", "");
+
+                                    string newFilePath = Path.Combine(Path.GetDirectoryName(pdfPath), $"{validName}.pdf");
+
+                                    pdfDocument.Close();
+                                    pdfReader.Close();
+
+                                    File.Move(pdfPath, newFilePath);
+
+                                    MessageBox.Show($"Файл успешно переименован в {validName}.pdf", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                    return;
+                                }
                             }
-                        }
 
-                        MessageBox.Show("Фраза не найдена в PDF файле.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Фраза не найдена в PDF файле.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                 }
             }
@@ -155,7 +165,6 @@ namespace PDF
                 MessageBox.Show($"Произошла ошибка: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
     }
 }
  
